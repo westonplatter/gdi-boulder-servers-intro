@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Section 1 ~ Intro to Servers ~ Girl Develop IT</title>
+		<meta name="description" content="">
+		<meta name="author" content="Weston Platter">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="reveal/css/reveal.css">
+		<link rel="stylesheet" href="reveal/css/theme/gdilight.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<!-- light editor<link rel="stylesheet" href="lib/css/light.css">-->
+		<!-- dark editor--><link rel="stylesheet" href="reveal/lib/css/light.css">
+
+		<!-- If use the PDF print sheet so students can print slides-->
+		<link rel="stylesheet" href="reveal/css/print/pdf.css" type="text/css" media="print">
+		<link rel="stylesheet" href="styles/global.css" type="text/css">
+		
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="reveal">
+
+			<div class="slides">
+			  <section>
+			  	<br>
+				  <h2>Welcome!</h2>
+				</section>
+
+				<!-- Opening slide -->
+				<section>
+				  <img src="images/gdi_logo_badge.png">
+				  <h3>Intro to Servers</h3>
+				  <h4>Session 1</h4>
+				</section>
+				
+				<section>
+				  <h3>Class notes</h3>
+				  <p>All class slides are also available on github at <a href="https://github.com/westonplatter/gdi-boulder-servers-intro/downloads">https://github.com/westonplatter/gdi-boulder-servers-intro/downloads</a></p> 
+				</section>
+	
+				<!-- Welcome -->
+				<section class="hide-pdf">
+				  <h3>Welcome!</h3>
+				  <div class = "left-align">
+				  <p>Girl Develop It is here to provide affordable and accessible programs to learn software through mentorship and hands-on instruction.</p>
+				  <br>
+				  <p class="green">Some "rules"</p>
+				  <ul class="wider">
+				    <li>We are here for you!</li>
+				    <li>Every question is important</li>
+				    <li>Help each other</li>
+				    <li>Have fun</li>
+				  </ul>
+				  </div>
+				</section>
+	
+				<section>
+				  <h3>Thanks to our sponsor</h3>
+				  <img src="images/sponsors/simple_energy.jpg" />
+				</section>
+				
+				<!-- Instructor Intro -->
+				<section class="hide-pdf">
+				  <h3>About your instructor</h3>
+				  <br>
+				  <h4>Weston Platter</h4>
+				  <br>
+				  <div >
+				    <ul>
+				    	<li>Found software through friends</li>
+				    	<br>
+				      <li>Work
+				      	<ul>
+				      		<li>Co-Founder @ Venture IO</li>
+				      		<li class="wider">GridKick - databases on demand</li>
+				      	</ul>
+				      </li>
+				      <br>
+				      <li>Twitter: <a href="http://twitter.com/westonplatter">@westonplatter</a></li>
+				      <li>E-mail: <a href="mailto:westonplatter@gmail.com">westonplatter@gmail.com</a></li>
+				    </ul>
+				  </div>
+				</section>
+				<section class="hide-pdf">
+					<h3>GridKick</h3>
+					<h3>databases on demand</h3>
+					<br>
+					<img src="images/gridkick.png">
+				</section>
+				<section class="hide-pdf">
+				  <h3>Why are you teaching?</h3>
+				  <div>
+				  	<br>
+				  	<p>College friends showed me how to dream with software</p>
+				  	<br>
+				  	<p>I want to inspire the</p>
+				  	<p>next generation of software engineers</p>
+				  </div>
+				</section>
+				<section class="hide-pdf">
+					<h3>Teaching Assistants</h3>
+					<br>
+					<p>Jenn</p>
+					<br>
+					<p>Phoneix</p>
+				</section>
+				
+				<section class="hide-pdf">
+				  <h3>Welcome!</h3>
+				  <div class="left-align">
+				  	<br>
+				  	<p class="blue">Tell us about yourself.</p>
+					  <ul>
+					    <li>Who are you?</li>
+					    <li class="wider">What do you hope to get out of the class?</li>
+					    <li>Favorite chartoon character?</li>
+					  </ul>
+				  </div>
+				</section>
+				
+				<section>
+					<h3>4 sessions</h3>
+					<div class="left-align">
+						<p>Session 1 - What are servers? What is the internet?</p>
+						<p>Session 2 - How to interact with servers</p>
+						<p>Session 3 - How to setup a website</p>
+						<p>Session 4 - How to use Vagrant</p>
+					</div>
+				</section>
+					
+				<section>
+					<div class="left-align">
+						<p class="blue">Real Question</p>
+						<p>What am I going to understand?</p>
+						<br>
+						<p>We want you to feel comfortable:</p>
+						<ul class="wider">
+							<li>Talking about servers</li>
+							<li>Using SSH to interact with servers</li>
+							<li>Setting up <b>real</b> HTML and Javascript websites</li>
+							<li>Dreaming about servers</li>
+						</ul>
+					</div>
+				</section>
+				
+				<section>
+					<h3>What is a server?</h3>
+					<div class="fragment">
+						<img src="images/google-servers-rack.jpg">
+						<p>Server rack at Google datacenter</p>
+						<p class="citation">http://www.google.com/about/datacenters/gallery/images/_2000/PRY_20.jpg</p>
+					</div>
+				</section>
+				
+				<section>
+					<h3>Server Rack</h3>
+					<div>
+						<img src="images/illustrations-server-rack.jpg">
+					</div>
+				</section>
+				
+				<section>
+					<h3>Server</h3>
+					<div>
+						<p>Server is an "industrian" version of a Desktop</p>
+						<img src="images/illustrations-server.jpg">
+					</div>
+				</section>
+				
+				<section>
+					<h3>More practically</h3>
+					<br>
+					<div>
+						<p class='left-align'>a <b>server</b>:</p>
+						<br>
+						<ul class="wider">
+							<li>is computer in a datacenter</li>
+							<li>has an IP address</li>
+							<li>can be virtualized</li>
+						</ul>
+					</div>
+				</section>
+				
+				<section>
+					<h3>What do severs do?</h3>
+					<br>
+					<p>First, we need to ask ...</p>
+					<br>
+					<h3>How does the internet work?</h3>
+				</section>
+				
+				<section>
+					<h3>How does the internet work?</h3>
+					<br>
+					<p>Send and Reveive information over HTTP</p>
+					
+					<br>
+					<p>HTTP = <u>H</u>yper <u>T</u>ext <u>T</u>ransfer <u>P</u>rotocol</p>
+					<br>
+					<img src="images/http-send-receive.jpg">
+				</section>
+				
+				<section>
+					<h3>But much bigger</h3>
+					<p>search on google for "mark zukerberg</p>
+					<p>click on Mark's facebook page</p>
+					<img src="images/http-overview.png">
+				</section>
+				
+				<section>
+					<h3>Opeations in order</h3>
+					<ol>
+						<li>HTTP Request. <a href="http://google.com">google.com</a></li>
+						<li>HTTP Response. <a href="http://google.com">google.com</a></li>
+						<li>HTTP Request. Search for "Zukerberg profile page"</li>
+						<li>HTTP Response. Search results. Click on 1st result</li>
+						<li>HTTP Request. <a href="http://facebook.com/zuck">facebook.com/zuck</a></li>
+						<li>HTTP Response. Mark's profile page</li>
+					</ol>
+					<br>
+					<br>
+					
+					<div class="left-align">
+						<p>DNS - domain name server</p>
+						<p class="wider">translates URLs (<a href="http://facebook.com">facebook.com</a>) into IP addresses (1.2.3.4)</p>
+					</div>
+				</section>
+				
+				<section>
+					<h3>What do servers do?</h3>
+					<br>
+					<p>Servers and programs running on them</p>
+					<p>receive HTTP requests and</p>
+					<p>send back HTTP responses</p>
+				</section>
+
+				<section>
+					<h3>HTTP Requests in the Wild</h3>
+					<img style="max-height: 80%;" src="images/http-request-headers.png">
+				</section>
+				
+				<section>
+					
+					<h3>Basic HTTP Request Headers</h3>
+					<pre><code>
+  GET / HTTP/1.1
+  Host: facebook.com
+  Accept: text/html,application/xhtml+xml,application/xml; ... 
+  Connection: keep-alive
+  Cache-Control: max-age=0
+  User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) ...
+					</code></pre>
+					
+					<br>
+					
+					<p class="fragment">This is really just text</p>
+				</section>
+				
+				<section>
+					<h3>HTTP Request Headers</h3>
+					<pre><code class="undefined">
+ =>  GET / HTTP/1.1
+     Host: facebook.com
+     Accept: text/html,application/xhtml+xml,application/xml; ... 
+     Connection: keep-alive
+     Cache-Control: max-age=0
+     User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) ...
+					</code></pre>
+				
+					<br>
+					<div class="left-align">
+						<p><span class="blue">GET</span> - HTTP verb or method</p>
+						<p><span class="blue">/</span> - url path</p>
+						<p><span class="blue">HTTP/1.1</span> - http version being used</p>
+					</div>
+				</section>
+				
+				<section>
+					<h3>HTTP Request Headers</h3>
+					<pre><code class="undefined">
+     GET / HTTP/1.1
+ =>  Host: facebook.com
+ =>  Accept: text/html,application/xhtml+xml,application/xml; ... 
+ =>  Connection: keep-alive
+     Cache-Control: max-age=0
+     User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) ...
+					</code></pre>
+					
+					<br>
+					<div class="left-align">
+						<p><span class="blue">Host</span> - the website URL</p>
+						<p><span class="blue">Accept</span> - accepted file types for ther HTTP Response</p>
+						<p><span class="blue">Connection</span> - connection type, there's options</p>
+					</div>
+				</section>
+
+				<section>
+					<h3>HTTP Request Headers</h3>
+					<pre><code class="undefined">
+     GET / HTTP/1.1
+     Host: facebook.com
+     Accept: text/html,application/xhtml+xml,application/xml; ... 
+     Connection: keep-alive
+ =>  Cache-Control: max-age=0
+ =>  User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) ...
+					</code></pre>
+					
+					<br>
+					<div class="left-align">
+						<p><span class="blue">Cace-Control</span> - cache or save files (images) locally</p>
+						<p><span class="blue">User-Agent</span> - Browser version sending request</p>
+					</div>
+				</section>
+				
+				<section>
+					<h3>MORE Request Headers</h3>
+					
+					<p>33 total request headers</p>
+					
+					<br>
+					<p class="blue">What should I know about headers?</p>
+					
+					<br>
+					<p>HTTP Headers enable browers to pro-actively communicate info to web servers</p>
+				</section>
+				
+				<section>
+					<h3>That covers HTTP Requests ...</h3>
+					<br>
+					<p>Send and Reveive information over HTTP</p>
+					<br>
+					<img src="images/http-send-receive.jpg">
+				</section>
+				
+				<section>
+					<h3>HTTP Response</h3>
+<pre><code>
+HTTP/1.1 200 OK
+Cache-Control: private, no-cache, no-store, must-revalidate
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+Pragma: no-cache
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 0
+Set-Cookie: datr=mSX0Uo094Zdi2_Kyv9eXrWH3; expires=Sun, 07-Feb-2016 00:15:21
+Content-Type: text/html; charset=utf-8
+X-FB-Debug: mlWzOHMacaw6GPk0waEL1JTSHnf9sMZcBC/3CKrCW6k=
+Date: Fri, 07 Feb 2014 00:15:22 GMT
+Connection: keep-alive
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; id=&quot;facebook&quot; class=&quot;no_js&quot;&gt; ... facebook ... &lt;/html&gt;
+</code></pre>
+				
+					<div>
+						<br>
+						<p>Response is able direct how information is used</p>	
+					</div>
+				</section>
+				
+				<section>
+					<h3>How do I make HTTP secure?</h3>
+					<br>
+					<p>If it's just text files, how is this secure?</p>
+					
+					<br>
+					<div class="left-align">
+						<p>For example,</p>
+						<ul class="wider">
+							<li>I can log into my bank online</li>
+							<li>I input my credit card on amazon.com</li>
+						</ul>
+					</div>
+
+					<br>
+					<div class="left-align fragment">
+						<p>HTTPS - hyper text transfer protocol secure</p>
+						<br>
+						<p>"secure" status is achieved via "SSL" encryption</p>
+					</div>
+				</section>
+				
+				<section>
+					<h3>Example HTTPS status</h3>
+					<img class="scale70" src="images/facebook-https.png">
+					<img class="scale70" src="images/https-tunnel.png">
+				</section>
+					
+				<section>
+					<h3>Where do servers come from?</h3>
+					<p class="blue">~ The Cloud ~</p>
+					
+					<div class="left-align fragment">
+						<br>
+						<p>Just like renting a car from a rental company</p>
+						<br>
+						<p>Common places to rent servers by the hour:</p>
+						<ul>
+							<li>Linode</li>
+							<li>Rackspace</li>
+							<li class="wider">AWS - Amazon Web Services</li>
+							<li>Digital Ocean</li>
+						</ul>
+					</div>
+				</section>
+				
+				<section>
+					<h3>What do I need to remember?</h3>
+					
+					<img class="fragment scale70" src="images/http-overview.png">
+					
+					<ul class="left-align wider">
+						<li class="fragment">URLs are really IP addresses</li>
+						<li class="fragment">Servers are simple computers in big warehouses</li>
+						<li class="fragment">HTTP requests and responses are just text files</li>
+					</ul>
+				</section>
+				
+				<section class="pdf-hide">
+					<h3>Time to take a break!</h3>
+				</section>
+			</div> <!-- end of div class="slides" -->
+			
+			<footer>
+				<div class="copyright">
+				  Intro to Servers &hearts; Girl Develop It Boulder 
+				  <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/80x15.png" /></a>
+				</div>
+	    </footer>
+		</div><!-- end of div class="reveal" -->
+
+		<script src="reveal/lib/js/head.min.js"></script>
+		<script src="reveal/js/reveal.min.js"></script>
+		<script>
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

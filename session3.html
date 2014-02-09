@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Section 1 ~ Intro to Servers ~ Girl Develop IT</title>
+    <meta name="description" content="GirlDevelopIT Boulder - Intro to Servers - Session 3">
+    <meta name="author" content="Weston Platter">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/gdilight.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <!-- light editor<link rel="stylesheet" href="lib/css/light.css">-->
+    <!-- dark editor--><link rel="stylesheet" href="reveal/lib/css/light.css">
+
+    <!-- If use the PDF print sheet so students can print slides-->
+    
+    <link rel="stylesheet" href="reveal/css/print/pdf.css" type="text/css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    
+    <style>
+      code.html {font-size: 130%;}
+      
+      .wider {
+        width: 150%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+
+      <div class="slides">
+        
+        <!-- course overview -->
+        <section>
+          <h3>4 sessions</h3>
+          <div class="left-align">
+            <p>Session 1 - What are servers? What is the internet?</p>
+            <p>Session 2 - How to interact with servers</p>
+            <p><b>Session 3 - How to setup and use NGINX</b></p>
+            <p>Session 4 - How to use Vagrant</p>
+          </div>
+        </section>
+        
+        <section>
+          <div class="left-align">
+            <p class="blue">Real Question</p>
+            <p>What am I going to understand?</p>
+            <br>
+            <p>We want you to feel comfortable:</p>
+            <ul class="wider">
+              <li>Talking about servers</li>
+              <li>Using SSH to interact with servers</li>
+              <li>Setting up <b>real</b> HTML and Javascript websites</li>
+              <li>Dreaming about servers</li>
+            </ul>
+          </div>
+        </section>
+      
+        <section>
+          <h3>Session 2 Review</h3>
+          <img src="images/ssh-2-users-groups.png">
+        </section>
+        
+        <section>
+          <h3>Session 2 Review</h3>
+          <img src="images/cloud-after-nginx.png">
+        </section>
+        
+        <section>
+          <h3>Session 3 End Goal</h3>
+          <img src="images/session-3-endgoal.png">
+        </section>
+        
+        <!-- ss1 nginx + html site -->
+        
+        <section>
+          <h3>Configurations</h3>
+          
+          <br>
+          <p>Software packages are written with specific intents, but allow you to configure them.</p>
+          
+          <br>
+          <p>For example:</p>
+          <ul>
+            <li>Desktop Background</li>
+            <li>Username and Password</li>
+          </ul>
+          
+          <br>
+          <p>Most unix packages will have 1 of many configraution files.</p>
+          
+          <b></b>
+          
+          <p>There isn't a default location for the config file - read the docs.</p>
+        </section>
+      
+        <section>
+          <h3>NGINX Configs</h3>
+          
+          <br>
+          <p>Main file</p>
+          <pre><code>/etc/nginx/nginx.conf</code></pre>
+          
+          <br>
+          <p>Other config files exist within</p>
+          <pre><code>/etc/nginx</code></pre>
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <img src="images/nginx-config-overview.png">
+          
+          <br>
+          <p>Configs = Directives & Blocks</p>
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>directive: user</h5>
+          
+          <br>
+          <p>Group Google! "nginx user"</p>
+          
+          <div class="fragment">
+            <br>
+            <a href="http://wiki.nginx.org/CoreModule#user">http://wiki.nginx.org/CoreModule#user</a>
+            
+            <br>
+            <p>NGINX user and group used to run the backgroup process</p>
+            
+            <br>
+            <p>On the server:</p>
+            <ul class="wider">
+              <li>Check user/group running the nginx process</li>
+              <li>Check the user in the /etc/nginx/nginx.conf file</li>
+            </ul>
+          </div>
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>directive: worker_processes</h5>
+          
+          <br>
+          <p>Group Google! "nginx worker_processes"</p>
+          
+          <div class="fragment">
+            <br>
+            <a href="http://wiki.nginx.org/CoreModule#worker_processes">http://wiki.nginx.org/CoreModule#worker_processes</a>
+            
+            <br>
+            <p>A worker process is a single-threaded process.</p>
+            
+            <br>
+            <p>What the heck?</p>
+            
+            <br>
+            <p>Put this on the back burner:</p>
+            <pre><code>max_clients = worker_processes * worker_connections</code></pre>
+          </div>
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>directive: pid</h5>
+          
+          <br>
+          <p>"pid" stands for "Process ID"</p>
+          
+          <br>
+          <p>Enables you to uniquely talk with Unix processes. EG,</p>
+          <pre><code>sudo service stop</code></pre>
+          
+          <br>
+          <p>Group Google! "nginx pid"</p>
+          
+          <div class="fragment">
+            <br>
+            <a href="http://wiki.nginx.org/CoreModule#pid">http://wiki.nginx.org/CoreModule#pid</a>
+            
+            <br>
+            <p>Tells NGINX where to locate the pid file</p>
+          </div>
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>block: events</h5>
+          <h5>directive: worker_connections</h5>
+          
+          <br>
+          <p>Last Google Group! "nginx worker_connections"</p>
+          
+          <div class="fragment">
+            <br>
+            <a href="http://wiki.nginx.org/EventsModule#worker_connections">http://wiki.nginx.org/EventsModule#worker_connections</a>
+            
+            <br>
+            <p>Number of HTTP connections allowed per worker</p>
+          </div>
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>block: http</h5>
+          <h5>overview</h5>
+          <img src="images/nginx-config-http.png">
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>block: http</h5>
+          <h3>Basic Settings</h3>
+          
+<pre><code>sendfile on;
+tcp_nopush on;
+tcp_nodelay on;
+keepalive_timeout 65;
+types_hash_max_size 2048;
+# server_tokens off;
+
+# server_names_hash_bucket_size 64;
+# server_name_in_redirect off;
+
+include /etc/nginx/mime.types;
+default_type application/octet-stream;
+</code></pre>
+
+          <br>
+          <p>Worth noting,</p>
+          <pre><code>include ...</code></pre>
+          <p>pulls file contents into configuration</p>
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>block: http</h5>
+          <h3>Logging Settings</h3>
+        </section>
+          
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>block: http</h5>
+          <h3>Gzip Settings</h3>
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>block: http</h5>
+          <h3>Virtual Host Configs</h3>
+          
+          <br>
+          <p>Again, pulling outside files into configuration</p>
+          
+<pre><code>include /etc/nginx/conf.d/*.conf;
+include /etc/nginx/sites-enabled/*;</code></pre>
+        </section>
+        
+        <section>
+          <h3>Setup HTML Site</h3>
+          
+          <br>
+          <p>Follow along ...</p>
+          
+          <br>
+          <p>As the <b>deploy</b> user, ssh into machine</p>
+          <pre><code>ssh deploy@9.8.7.6</code></pre>
+        </section>
+        
+        <section>
+          <h3>Create www folder</h3>
+          
+          <br>
+          <p>Create a "www" folder for sites to live in.</p>          
+          
+          <br>
+<pre><code>cd /var
+mkdir www
+cd www
+</code></pre>
+
+          <br>
+          <p>You should get the same output</p>
+          <pre><code>pwd # OUTPUT /var/www</code></pre>
+        </section>
+        
+        <section>
+          <h3>Use git to pull in HTML</h3>
+          
+          <br>
+          <p>We'll pull a pre-made website from GitHub</p>
+          
+          <br>
+<pre><code>sudo apt-get update
+sudo apt-get install git
+git clone git@github.com:westonplatter/example_html_site.git html_site</code></pre>
+
+          <br>
+          <p>Check that the files were "cloned"</p>
+          
+<pre><code>cd html_site
+pwd # => OUTPUT /var/www/html_site
+ls
+</code></pre>
+
+          <br>
+          <p>You should see an index.html file and folders</p>
+        </section>
+        
+        <section>
+          <h3>NGINX "server" blocks for Site</h3>  
+          
+          <br>
+          <p>Need somthing to map between NGXIN and folder</p>
+          
+          <img src="images/nginx-server-html.png">
+        </section>
+        
+        <section>
+          <h3>nginx.conf</h3>
+          <h5>block: server</h5>
+          
+          <div class="left-align">
+            <br>
+            <p><span class="blue">listen</span> - listen for HTTP requests on this port </p>
+            <p><span class="blue">sever_name</span> - helps NGINX match HTTP request to server blocks</p>
+            <p><span class="blue">root</span> - file system path to website</p>
+            <p><span class="blue">index</span> - default file to serve</p>
+          </div>
+        </section>
+        
+        <section>
+          <h3>Create html_site nginx configuration</h3>
+          
+          <br>
+<pre><code>cd /etc/nginx/sites-enabled</code></pre>
+            
+          <br>
+          <p>Create file using a shell editor</p>
+<pre><code>nano html_site</code></pre>
+
+          <br>
+<pre><code>server {
+listen 7010;
+server_name html_site;
+root /var/www/html_site;
+index index.html index.htm;
+}</code></pre>
+
+          <br>
+          <p>Restart nginx to pickup the "html_site" changes</p>
+        </section>
+        
+        <section>
+          <h3>Go to site</h3>
+          
+          <br>
+          <a href="">9.8.7.6:7010</a>
+        </section>
+        
+        <section>
+          10 min break
+        </section>
+        
+        <!-- ss2 javascript site -->
+        
+        <section>
+          <h3>Short recap</h3>
+          
+          <br>
+          <p>NGINX was reading the HTML files</p>
+          
+          <br>
+          <p>What if we have non HTML sites?</p>
+        </section>
+        
+        <section>
+          <h3>Welcome to Nodejs</h3>
+          
+          <br>
+          <p>Nodejs is full application framework written in pure javascript</p>
+          
+          <br>
+          <p>It's different because it intakes the HTTP request and "HTTP Response" differently for each request</p>
+        </section>
+        
+        <section>
+          <h3>Demo of the Nodejs app</h3>
+          
+          <br>
+          <img src="images/node-demo.png">
+        </section>
+        
+        <section>
+          <h3>The Simple Basics of Nodejs</h3>
+          <img src="images/node-basics.png">
+        </section>
+        
+        <section>
+          <h3>So how do we get that work?</h3>
+          
+          <br>
+          <p>We need NGINX to send HTTP Requests to the app</p>
+          
+          <br>
+          <p>Follow along for the ride ...</p>
+        </section>
+        
+        <section>
+          <h3>Install nodejs on the server</h3>
+          
+          <br>
+<pre><code>sudo apt-get update
+  
+sudo apt-get install -y python-software-properties python g++ make  
+
+sudo add-apt-repository ppa:chris-lea/node.js
+
+sudo apt-get update
+
+sudo apt-get install nodejs</code></pre>
+          
+          <br>
+          <p>This should work</p>
+          
+          <br>
+          <pre><code>node -v</code></pre>
+        </section>
+        
+        <section>
+          <h3>Get the Node app from Github</h3>
+          
+          <br>
+          <p>Use git again</p>
+<pre><code>cd /var/www
+git clone git@github.com:westonplatter/gdi-boulder-servers-intro-node-uploader.git node_site
+</code></pre>
+
+          <br>
+          <p>Install dependencies</p>
+          <pre><code>npm install</code></pre>
+          
+          <br>
+          <p>Install this too</p>
+          <pre><code>npm install -g forever</code></pre>
+        </section>
+        
+        <section>
+          <h3>Test it out</h3>
+          
+          <br>
+          <p>Start up the node app</p>
+          <pre><code>node server</code></pre>
+          
+          <br>
+          <p>Go to your IP address on port 9000</p>
+          <pre><code>9.8.7.6:9000</code></pre>
+        </section>
+      
+        <section>
+          <h3>Now we need the NGINX connect</h3>
+          
+          <br>
+          <p>Create a Server block with Reverse Proxy</p>
+          
+          <img src="images/nginx-reverse-proxy.png">
+        </section>
+        
+        <section>
+          <h3>Create the node config</h3>
+          
+          <br>
+          <p>Back to the NGINX configs</p>
+          
+          <br>
+<pre><code>cd /etc/nginx/sites-enabled
+nano node_site</code></pre>
+
+            <br>
+            <p>Restart nginx to pick up configs</p>
+            <pre><code>sudo service nginx restart</code></pre>
+        </section>
+        
+       <section>
+          <h3>How do we keep the app running?</h3>
+          
+          <br>
+          <p>We need a process manager, AKA, daemon</p>
+          
+          <br>
+<pre><code>sudo npm install -g forever
+cd /var/www/node_site
+forever start server.js
+</code></pre>
+
+          <br>
+          <p>See that it's running (similar to "ps aux | grep nginx"</p>
+          <pre><code>forever list</code></pre>
+       </section>
+        
+      
+        <section>
+          10 min break
+        </section>
+        
+        
+        
+      </div> <!-- end of div class="slides" -->
+      
+      <footer>
+        <div class="copyright">
+          Intro to Servers &hearts; Girl Develop It Boulder 
+          <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/80x15.png" /></a>
+        </div>
+      </footer>
+    </div><!-- end of div class="reveal" -->
+
+
+    <script src="reveal/lib/js/head.min.js"></script>
+    <script src="reveal/js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>

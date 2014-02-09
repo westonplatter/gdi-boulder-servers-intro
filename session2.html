@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Section 1 ~ Intro to Servers ~ Girl Develop IT</title>
+    <meta name="description" content="GirlDevelopIT Boulder - Intro to Servers - Session 2">
+    <meta name="author" content="Weston Platter">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/gdilight.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <!-- light editor<link rel="stylesheet" href="lib/css/light.css">-->
+    <!-- dark editor--><link rel="stylesheet" href="reveal/lib/css/light.css">
+
+    <!-- If use the PDF print sheet so students can print slides-->
+    <link rel="stylesheet" href="reveal/css/print/pdf.css" type="text/css" media="print">
+    <link rel="stylesheet" href="styles/global.css"        type="text/css">
+    
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="reveal">
+
+      <div class="slides">
+        
+        <!-- course overview -->
+        <section class="pdf-hide">
+          <h3>4 sessions</h3>
+          <div class="left-align">
+            <p>Session 1 - What are servers? What is the internet?</p>
+            <p class="blue">Session 2 - How to interact with servers</p>
+            <p>Session 3 - How to setup and use NGINX</p>
+            <p>Session 4 - How to use Vagrant</p>
+          </div>
+        </section>
+      
+        <section>
+          <h3>Session 1 Review</h3>
+          
+          <img class="scale70" src="images/http-overview.png">
+          
+          <ul class="left-align wider">
+            <li>URLs are really IP addresses</li>
+            <li>Servers are simple computers in big warehouses</li>
+            <li>HTTP requests and responses are just text files</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>But ...</h3>
+          <img src="images/server-how-control.png">
+        </section>
+        
+        <section>
+          <h3>To control servers we'll cover</h3>
+          <br>
+          <ul class="wider">
+            <li>SSH - (secure shell)</li>
+            <br>
+            <li>Unix users</li>
+            <li>Unix groups</li>
+            <li>Unix permissions</li>
+            <br>
+            <li>Packages</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>SSH - Secure Shell</h3>
+          <br>
+          <p>encrypted tunnel connection between to 2 "clouds".</p>
+          <img src="images/ssh-auth.png">
+        </section>
+          
+        <section>
+          <h3>Exercise 1 - SSH into your server</h3>
+<pre><code>ssh root@9.8.7.6  # (it will ask you for your password)</code></pre>
+<br>
+          
+          <p>Enter the follow commands and write down the output</p>
+<pre><code>
+  whoami
+
+</code></pre>
+
+<pre><code>
+  pwd
+
+</code></pre>
+
+<pre><code>
+  echo "I am in the cloud"
+
+</code></pre>
+
+     
+          <br>
+          <p>Windows users: use git bash</p>
+          <p>Mac users: use the terminal</p>
+        </section>
+        
+        <section>
+          <h3>Questions about Exercise 1</h3>
+          
+
+<pre><code>
+  whoami   # OUTPUT => root
+
+</code></pre>
+<p>Why were you root?</p>
+<br>
+
+<pre><code>
+  pwd     # OUTPUT => /root
+
+</code></pre>
+<p>What does this tell you about your "physical" location?</p>
+<br>
+
+<pre><code>
+  echo "I am in the cloud"    # OUTPUT => echo "I am in the cloud"
+
+</code></pre>
+<p>Did this command surprise you?</p>
+<br>
+        </section>
+        
+        <section>
+          <h3>Update our cloud illustration</h3>
+          
+          <img src="images/ssh-root.png">
+        </section>
+      
+        <section>
+          <h3>Unix users</h3>
+          
+          <br>
+          <p>Being the "root" user is great, but ...</p>
+          
+          <br>
+          <ul class="wider">
+            <li>authenticating by typing in password = <span class="redred">weak</span></li>
+            <li>allowing root to login into your server = <span class="redred">weak</span></li>
+            <li>we want to learn about Unix users</li>
+          </ul>
+          
+          <br><br>
+          <p class="redred">weak = security vulnerability, you get hacked</p>
+          
+          <br>
+          <p class="blue">therefore, we're going to create another user!</p>
+        </section>
+        
+        
+        <section>
+          <h3>Unix users</h3>
+          
+          <br>
+          <p>What did the root user have?</p>
+          
+          <div class="fragment">
+            <br>
+            <ul class="w3">
+              <li>Username       </li>
+              <li>Home Directory</li>
+            </ul>
+            
+            <br><br>
+            <p class="blue">shell command = useradd + options</p>
+          </div>
+        
+          <div class="fragment">
+            <br>
+            <ul class="w3"><li>Password</li></ul>
+            
+            <br><br>
+            <p class="blue">shell command = passwd</p>
+            
+            <br>
+            <p>Yes, "passwd". Omit the "o" and "r".</p>
+          </div>
+        </section>
+        
+        <section>
+          <h3>Uxix shell commands</h3>
+          <img class="scale70" src="images/command-generic.png">
+        </section>
+        
+        <section>
+          <h3>Exercise 2 - Step 1 - useradd</h3>
+          
+<p>Command</p>
+<pre><code>useradd
+</code></pre>
+
+<p>Argument</p>
+<pre><code>deploy</code></pre>
+
+<p>Options</p>
+<pre><code>key   = -d
+value = /home/deploy  
+
+key   = -m
+value = 
+
+key   = -s
+value = /bin/bash</code></pre>
+<br>
+<p>What's the resulting command?</p>
+<pre><code>_______    __  ______   ___   __  _______    _________</code></pre>
+        </section>
+        
+        <section>
+          <h3>Exercise 2 - Step 2 - passwd</h3>
+          
+<p>Command</p>
+<pre><code>passwd</code></pre>
+
+<p>Argument</p>
+<pre><code>deploy</code></pre>
+
+<p>Options</p>
+<pre><code>(none)</code></pre>
+
+<p>Resulting Command</p>
+<pre><code>______   _______</code></pre>
+
+<br>
+<p>Enter password = "gdi" twice</p>
+        </section>
+        
+        <section>
+          <h3>Exercise 2 - Step 3 - test it</h3>
+          
+          <br>
+<p>SSH into server as new "deploy" user</p>
+<pre><code>ssh deploy@9.8.7.6</code></pre>
+
+<p>Test who you are</p>
+<pre><code>whoami</code></pre>
+
+<p>Test where you are</p>
+<pre><code>pwd</code></pre>
+
+<p>Test out the "echo" command</p>
+<pre><code>echo "I am in the cloud"</code></pre>
+        </section>
+        
+        <section>
+          <h3>Update our Cloud picture</h3>
+          <img data-image="" src="images/ssh-2-users.png">
+        </section>
+        
+        <section>
+          <h3>Unix groups and permissions</h3>
+          
+          <br>
+          <p>What can a user do once they login into the server?</p>
+          <p>How do we control what happens on the server?</p>
+          
+          <br>
+          <p>Macs have a "System Adminstrator"</p>
+          <p>Window machines have an "Admin"</p>
+          
+          <br>
+          <p>Unix systems have a <span class="blue"><u>sudo</u></span> group</p>
+        </section>
+        
+        <section>
+          <h3>Unix groups</h3>
+      
+          <br>
+          <p>For our purposes, the <span class="blue">sudo</span> group membership</p>
+          <p>grants access to do <u>almost</u> anything.</p>
+          
+          <br>
+          <p>Selectively grant <u>permissions</u> to users</p>
+          <p>by adding them to groups</p>
+          
+          <br>
+          <p>By invoking sudo while running a shell command, you're invoking root acccess</p>
+          <pre><code>sudo echo "I am root here"</code></pre>
+        </section>
+        
+        <section> 
+          <h3>Unix groups</h3>
+      
+          <br>
+          <p>Add user to group:</p>
+          <pre><code>usermod -aG sudo deploy</code></pre>
+          <img src="images/command-usermod.png">
+        </section>
+        
+        <section>
+          <h3>Unix permissions</h3>
+          
+          <br>
+          <p>Permissions are <span class="blue">access rules</span> set on directories and files.</p>          
+          <img src="images/permissions.png"> 
+
+          <br><br>
+          <p>3 types of <span class="blue">access rules</span>:</p>
+          <ul class="w3">
+            <li>r --- read</li>
+            <li>w -- write</li>
+            <li>x --- execute</li>
+          </ul>          
+        </section>
+        
+        <section>
+          <h3>Unix Permissions</h3>
+          
+          <br>
+          <p>There's math in Permissions</p>
+          
+          <img src="images/permissions-math.jpg">
+          <p class="citation">http://krnlpanic.com/wp/wp-content/uploads/2013/03/chmod.jpg</p>
+          
+          <br>
+          <ul class="w4">
+            <li>r --- read &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; 4</li>
+            <li>w --  write &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; 2</li>
+            <li>x --- execute &nbsp;=&nbsp; 1</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Unix Permissions</h3>
+          <br>
+          <p>Change owner and/or group</p>
+          <p class="blue">chown</p>
+          <img class="scale50" src="images/commands-chown.png">
+        </section>
+        
+        <section>
+          <h3>Unix Permissions</h3>
+          
+          <br>
+          <p>Change permissions (read, write, execute)</p>
+          <p class="blue">chmod</p>
+
+<br>
+<p>Numbers - set user, group, and others all at once</p>          
+<pre><code>sudo chmod 755 /home/deploy/files.txt</code></pre>
+
+<br>
+<p>Words - Edit selectively</p>
+<pre><code>sudo chmod u+w /home/deploy/files.txt</code></pre>
+<pre><code>sudo chmod g-r /home/deploy/files.txt</code></pre>
+
+<br>
+<p>Words - Set multiple</p>
+<pre><code>sudo chmod ux=rx /home/deploy/files.txt</code></pre>
+
+        </section>
+        
+        <section>
+          <h3>Exercise 3 - Step 1</h3>
+          <h3>Add deploy to "sudo" group</h3>
+          
+<br>
+<p>ssh into server as "root"</p>
+<pre><code>ssh root@9.8.7.6</code></pre>
+
+<p>Command</p>
+<pre><code>usermod</code></pre>
+
+<p>Arguments</p>
+<pre><code>arguemnt 1 = sudo
+argument 2 = deploy</code></pre>
+
+<p>Options (required)</p>
+<pre><code>key   = -aG
+value = </code></pre>
+
+<br>
+<p>What's the resulting command?</p>
+<pre><code>______   ___   ______   _______</code></pre>
+
+        </section>
+        
+        <section>
+          <h3>Exercise 3 - Step 2</h3>
+          <h3>Ensure deploy added to group</h3>
+
+<br>
+<p>SSH into server as "deploy"</p>
+<pre><code>ssh deploy@9.8.7.6</code></pre>
+
+<p>Command</p>
+<pre><code>groups</code></pre>
+
+<p>Argument (optional)</p>
+<pre><code># (blank - defaults to current user)
+
+deploy</code></pre>
+
+<br>
+<p>What's the resulting command?</p>
+<pre><code>______ 
+______   _______</code></pre>
+
+        </section>
+        
+        <section>
+          <h3>Exercise 3 - Test out sudo</h3>
+          
+<br>
+<p>Use sudo with echo</p>
+<pre><code>sudo echo "I have power"</code></pre>
+        </section>
+        
+        
+        
+        
+        <section>
+          <h3>Update our Cloud picture</h3>
+          <img src="images/ssh-2-users-groups.png">
+        </section>
+        
+        <section>
+          <h3>To control servers we'll cover</h3>
+          
+          <br>
+          <ul class="wider">
+            <li>SSH - (secure shell)</li>
+            <br>
+            <li>Unix users</li>
+            <li>Unix groups</li>
+            <li>Unix permissisions</li>
+            
+            <br>
+            <li class="blue">Packages</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Unix Packages</h3>
+          
+          <br>
+          <p>A "Package" is a software program you install</p>
+          
+          <br>
+          <p>Default package manager for Linux/Ubuntu</p>
+          <p><span class="blue">apt-get</span></p>
+        </section>
+        
+        
+        <section>
+          <h3>What's a package manager?</h3>
+          <p>Gathers package lists from multiple sources</p>
+          <img class="scale50" src="images/apt-get-update.png">
+        </section>
+        
+        <section>
+          <h3>Install nginx walk through</h3>
+          
+          <br>
+          <p>You'll need to use root access via the sudo commnd</p>
+          
+          <br>
+          <p>Update the apt-get package lists</p>
+          <pre><code>sudo apt-get update</code></pre>
+
+          <br>
+          <p>Install nginx</p>
+          <pre><code>sudo apt-get install nginx</code></pre>
+        </section>
+        
+        <section>
+          <h3>What happened?</h3>
+          
+<pre><code>deploy@intro-00:~$ sudo apt-get install nginx
+[sudo] password for deploy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  libgd2-noxpm libjpeg-turbo8 libjpeg8 libxslt1.1 nginx-common nginx-full
+Suggested packages:
+  libgd-tools
+The following NEW packages will be installed:
+  libgd2-noxpm libjpeg-turbo8 libjpeg8 libxslt1.1 nginx nginx-common
+  nginx-full
+0 upgraded, 7 newly installed, 0 to remove and 56 not upgraded.
+Need to get 882 kB of archives.
+After this operation, 2,692 kB of additional disk space will be used.
+Do you want to continue [Y/n]?
+</code></pre>
+
+<pre><code>Y</code></pre>
+
+<code><pre>
+Get:1 http://mirrors.digitalocean.com/ubuntu/ precise-updates/main libjpeg-turbo8 amd64 1.1.90+svn733-0ubuntu4.3 [111 kB]
+....
+Setting up nginx (1.1.19-1ubuntu0.5) ...
+Processing triggers for libc-bin ...
+ldconfig deferred processing now taking place
+deploy@intro-100:~$ 
+</code></pre>
+
+        </section>
+        
+        <section>
+          <h3>How do we figure out where</h3>
+          <h3>nginx was installed?</h3>
+          
+          <br>
+          <p class="fragment"> we didn't tell if where to install</p>
+          <p class="fragment">apt-get didn't log that info</p>
+          
+          <br>          
+          <div class="fragment">
+            <p>what if there was a tool ...</p>
+            <div class="fragment">
+              <p>there is a tool</p>
+              <pre><code>where</code></pre>
+            </div>
+          </div>
+          
+          <br>
+          <pre class="fragment"><code>where  # => /etc/nginx</code></pre>
+        </section>
+        
+        <section>
+          <h3>How do we move around</h3> 
+          <h3>within the server?</h3>
+          
+          <br>
+          <p><span class="blue">cd</span> - "change directory"</p>
+          
+          <br>
+          <pre><code>cd /etc/nginx</code></pre>
+
+          <br>
+          <p>Word of caution - you cannot</p>
+          <pre><code>sudo cd /root</code></pre>
+          
+          <br>
+          <p>Why not?</p>
+          <p>sudo works on executables, and "cd" is a shell builtin</p>
+        </section>
+        
+        <section>
+          <h3>How do we see what's</h3>
+          <h3>in the  of a folder?</h3>
+          
+          <br>
+          <p><span class="blue">ls</span> - List files and directories
+          <pre><code>deploy@intro-00:/etc/nginx$ ls
+
+conf.d          koi-win           naxsi.rules   scgi_params      uwsgi_params
+fastcgi_params  mime.types        nginx.conf    sites-available  win-utf
+koi-utf         naxsi_core.rules  proxy_params  sites-enabled</code></pre>
+          
+          <br>
+          <p>also list user, groups, and permissions</p>
+          <pre><code>deploy@intro-00:/etc/nginx$ ls -als
+total 68
+4 drwxr-xr-x  5 root root 4096 Feb  8 09:38 .
+4 drwxr-xr-x 90 root root 4096 Feb  8 09:38 ..
+4 drwxr-xr-x  2 root root 4096 Nov 21 22:15 conf.d
+4 -rw-r--r--  1 root root  898 Dec 13  2011 fastcgi_params
+...
+4 drwxr-xr-x  2 root root 4096 Feb  8 09:38 sites-enabled
+4 -rw-r--r--  1 root root  497 Sep 25  2011 uwsgi_params
+4 -rw-r--r--  1 root root 3071 Sep 25  2011 win-utf</code></pre>
+          
+        </section>
+        
+        <section>
+          <h3>Files are present, but</h3>
+          <h3>how do we know if it's running?</h3>
+          
+          <br>
+          <p>There's a lot of ways. Easiest way,</p>
+          <pre><code>   ps aux | grep nginx</code></pre>
+          <img class="scale70" src="images/ps-aux.png">
+        </section>
+        
+        <section>
+          <h3>Control NGINX via the</h3>
+          <h3>service command</h3>
+          
+          <br>
+          <p>The service command connects to nginx the</p>
+          <p>"init" script (/etc/init.d/nginx)</p>
+          
+          <br>
+          <p>What can it do?</p>
+          <pre><code>deploy@intro-00:/etc/init.d$ sudo service nginx
+            
+Usage: nginx {start|stop|restart|reload|force-reload|status|configtest}</code></pre>
+          
+          <br>
+          <p>Start nginx</p>
+          <pre><code>sudo service nginx start</code></pre>
+        </section>
+        
+        <section>
+          <h3>Update our cloud illustration</h3>
+          <img class="scale70" src="images/cloud-after-nginx.png">
+        </section>
+        
+        <section>
+          <h3>See the result in your browser</h3>
+          
+          <br>
+          <p>Copy and paste the IP address into your browser</p>
+          
+          <img class="scale70" src="images/nginx.jpgx">
+        </section>
+        
+        
+        <section>
+          <h3>Exercise 4 - Install nginx</h3>
+          
+          <br>
+          <ul class="wider">
+            <li>Update apt-get</li>
+            <li>Use "apt-get" to install nginx</li>
+            <li>Use "where" to find install location</li>
+            <li>Use "ls" to confirm files are present</li>
+            <li>Use "ps" to see if nginx is running</li>
+            <li>Start nginx</li>  
+            <li>See NGINX in your browser</li>
+          </ul>
+        </section>
+        
+        <section>
+          <p>If time allows</p>
+          <h3>Exercise 5</h3>
+          <h3>SSH public/private key auth</h3>
+          
+          <br>
+          <div class="left-align">
+            <p>1. Follow the Github tutorial</p>
+            <p><a href="https://help.github.com/articles/generating-ssh-keys">help.github.com/articles/generating-ssh-keys</a></p>
+            <p>create your SSH public/private keys</p>
+          </div>
+          
+          <br>
+          <div class="left-align">
+            <p>2. Make ".ssh" directory</p>
+<pre><code>ssh deploy@9.8.7.6
+cd /home/deploy
+mkdir .ssh
+</code></pre>
+          </div>
+            
+          <br>
+          <div class="left-align">
+            <p>3. Copy your "id_rsa.pub"</p>
+          </div>
+        </section>
+        
+        <section>
+          <h3>SSH public/private key auth</h3>
+          
+          <br>
+          <div class="left-align">
+            <p>4. "Create" a file and paste in id_rsa.pub</p>
+            <p>Start by, </p>
+<pre><code>cd /home/deploy/.ssh
+nano authorized_keys</code></pre>
+            
+            <p>Paste in your "id_rsa.pub"</p>
+            <p>Save, close file, and exit out of SSH connection</p>
+          </div>
+          
+          <br>
+          <div class='left-align'>
+            <p>5. SSH into server (you should not need password)</p>
+            <pre><code>ssh deploy@9.8.7.6</code></pre>
+          </div>
+        </section>
+        
+        <section>
+          <h3>SSH - Secure Shell</h3>
+          <br>
+          <p>encrypted tunnel connection between to 2 "clouds".</p>
+          <img class="scale70" src="images/ssh-auth.png">
+        </section>
+        
+        <section>
+          <h3>We covered</h3>
+          <br>
+          <ul class="wider">
+            <li>SSH - (secure shell)</li>
+            <br>
+            <li>Unix users</li>
+            <li>Unix groups</li>
+            <li>Unix permissions</li>
+            <br>
+            <li>Packages</li>
+            <li>SSH without passwords!</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>4 sessions</h3>
+          <div class="left-align">
+            <p>Session 1 - What are servers? What is the internet?</p>
+            <p class="blue">Session 2 - How to interact with servers</p>
+            <p>Session 3 - How to setup and use NGINX</p>
+            <p>Session 4 - How to use Vagrant</p>
+          </div>
+        </section>
+        
+      </div> <!-- end of div class="slides" -->
+      
+      <footer>
+        <div class="copyright">
+          Intro to Servers &hearts; Girl Develop It Boulder 
+          <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/80x15.png" /></a>
+        </div>
+      </footer>
+    </div><!-- end of div class="reveal" -->
+
+    <script src="reveal/lib/js/head.min.js"></script>
+    <script src="reveal/js/reveal.min.js"></script>
+
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+
+  </body>
+</html>

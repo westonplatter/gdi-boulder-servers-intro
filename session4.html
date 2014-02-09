@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Section 1 ~ Intro to Servers ~ Girl Develop IT</title>
+    <meta name="description" content="GirlDevelopIT Boulder - Intro to Servers - Session 4">
+    <meta name="author" content="Weston Platter">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/gdilight.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <!-- light editor<link rel="stylesheet" href="lib/css/light.css">-->
+    <!-- dark editor--><link rel="stylesheet" href="reveal/lib/css/light.css">
+
+    <!-- If use the PDF print sheet so students can print slides-->
+    
+    <link rel="stylesheet" href="reveal/css/print/pdf.css" type="text/css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    
+    <style>
+      code.html {font-size: 130%;}
+      
+      .wider {
+        width: 150%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+
+      <div class="slides">
+        
+        <!-- course overview -->
+        <section>
+          <h3>4 sessions</h3>
+          <div class="left-align">
+            <p>Session 1 - What are servers? What is the internet?</p>
+            <p>Session 2 - How to interact with servers</p>
+            <p>Session 3 - How to setup and use NGINX</p>
+            <p><b>Session 4 - How to use Vagrant</b></p>
+          </div>
+        </section>
+      
+        <section>
+          <h3>Session 3 Review</h3>
+        </section>
+        
+        <section>
+          <h3>Concepts to explain</h3>
+          <h3>End Goal</h3>
+        </section>
+      
+        <section>
+          <h3>What is Vagrant?</h3>
+          
+          <br>
+          <p>Tool to create and configure,</p>
+          <ul>
+            <li>lightweight</li>
+            <li>reproducible</li>
+            <li>portable</li>
+          </ul>
+          <p>development environments</p>.
+        </section>
+        
+        <section>
+          <h3>Vagrant Workflow</h3>
+          <img src="images/vagrant-workflow.png">
+          <p style="font-size: 50%;">http://www.digitalforreallife.com/2012/11/boosting-teamwork-with-vagrant/</p>
+        </section>
+        
+        <section>
+          <h3>Where this is awesome</h3>
+          
+          <br>
+          <p>Rails' Database Driver works with</p>
+          <ul>
+            <li>Sqlite</li>
+            <li>MySQL</li>
+            <li>Postgres</li>
+          </ul>
+          
+          <br>
+          <br>
+          <p>All new features have to be tested against each.</p>
+          
+          <br>
+          <p>Rails Dev Box runs automated tests for each Database</p>
+        </section>
+        
+        <section>
+          <h3>Virtual Box</h3>
+          
+          <br>
+          <p class="left-align">"Emulates" Hadware</p>
+          <ul class="wider">
+            <li>Monitor</li>
+            <li>Network Card, Wifi, IP Addreses</li>
+            <li>Hard Drive</li>
+            <li>RAM</li>
+          </ul>
+          
+          <br>
+          <br>
+          <p class="left-align">Terms</p>
+          <ul class="wider">
+            <li>VM stands for "virtual machine"</li>
+            <li>Guest Machine = "virtual machine"</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Using Vagrant + VirtualBox</h3>
+          
+          <br>
+          <p >Control Vagrant via command Line and config files</p>
+          
+          <br>
+          <p>Mac Users - terminal</p>
+          
+          <br>
+          <p>Windows Users - "Git Bash" program</p>
+          
+          <br>
+          <p>Editing files - Your favorite text editor or Sublime</p>
+        </section>
+        
+        <section>
+          <h3>Vagrant commands</h3>
+          
+          <ul>
+            <li>destroy</li>
+            <li>halt</li>
+            <li>help</li>
+            <li>init</li>
+            <li>provision</li>
+            <li>reload</li>
+            <li>resume</li>
+            <li>ssh</li>
+            <li>status</li>
+            <li>suspend</li>
+            <li>up</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>vagrant help</h3>
+          
+          <pre><code>vagrant help</code></pre>
+          
+          <br>
+          <p>Shows a list of all possible commands</p>
+        </section>
+        
+        <section>
+          <h3>vagrant init</h3>
+          
+          <pre><code>vagrant init [box-name] [box-url]</code></pre>
+          
+          <br>
+          <p>Creates an initial Vagrantfile if one doesn't already exist.</p>
+          
+          <br>
+          <p>If one doesn't exist ... in your current location</p>
+        </section>
+        
+        <section>
+          <h3>vagrant up</h3>
+          
+          <pre><code>vagrant up</code></pre>
+          
+          <br>
+          <p>Creates and configures guest machines according to your Vagrantfile.</p> 
+        </section>
+        
+        <section>
+          <h3>vagrant status</h3>
+          
+          <pre><code>vagrant status</code></pre>
+          
+          <br>
+          <p>This tells you the state of the machines Vagrant is managing.</p>
+          
+          <br>
+          <p>Only works if there's a Vagrantfile in your current location</p>
+        </section>
+        
+        <section>
+          <h3>vagrant provision</h3>
+          
+          <pre><code>vagrant provision</code></pre>
+          
+          <br>
+          <p>Runs any configured provisioners against the running Vagrant managed machine.</p>
+        </section>
+        
+        <section>
+          <h3>vagrant ssh</h3>
+          
+          <pre><code>vagrant ssh</code></pre>
+          
+          <p>This will SSH into a running Vagrant machine and give you access to a shell.</p>
+        </section>
+        
+        <section>
+          <h3>vagrant reload</h3>
+          
+          <pre><code>vagrant reload</code></pre>
+          
+          <br>
+          <p>The equivalent of running a halt followed by an up.</p>
+          
+          <br>
+          <p>After making any modifications to the Vagrantfile, a reload should be called.</p>
+        </section>
+        
+        <section>
+          <h3>vagrant suspend</h3>
+          <pre><code>vagrant suspend</code></pre>
+          
+          <br>
+          <p>This suspends the guest machine Vagrant is managing, rather than fully shutting it down or destroying it.</p>
+          
+          <br>
+          <p>Vagrant saves the Guest Machine's RAM contents on your Hard Drive - therefore requiring space</p>
+        </section>
+        
+        <section>
+          <h3>vagrant resume</h3>
+          <pre><code>vagrant resume</code></pre>
+          <br>
+          <p>Resumes a Vagrant managed machine that was previously suspended, perhaps with the suspend command.</p>
+        </section>
+        
+        <section>
+          <h3>vagrant halt</h3>
+          <pre><code>vagrant halt</code></pre>
+          
+          <br>
+          <p>Shuts down the running machine Vagrant is managing.</p>
+          
+          <br>
+          <p>First attempts to gracefully shut down the machine by running the guest OS shutdown mechanism.</p>
+          
+          <br>
+          <p>If this fails, Vagrant will "shut off" power to the machine.</p>
+        </section>
+        
+        <section>
+          <h3>vagrant destroy</h3>
+          <pre><code>vagrant destroy</code></pre>
+          
+          <br>
+          <p>Stops the running machine Vagrant is managing and destroys all resources that were created during the machine creation process.</p>
+          
+          <br>
+          <p>As if the Virtual Machine was never there</p>
+        </section>
+        
+        <section>
+          <h3>What do I need to ...</h3>
+          
+          <br>
+          <div class="left-align">
+            <p>Know</p>
+            <ul class="w10">
+              <li>Vagrant is a command line tool to manage VMs</li>
+              <li>The VMs are "built" according to their Vagrantfile</li>
+            </ul>
+          </div>
+          
+          <br>
+          <div class="left-align">
+            <p>See</p>
+            <ul class="wider">
+              <li>Duplicate VM "state" between devs</li>
+              <li>Duplicate production servers locally</li></li>
+            </ul>
+          </div>
+        </section>
+        
+        <section>
+          <h3>Build a VM walk through</h3>  
+          
+          <br>
+          <pre><code>vagrant init</code></pre>
+          
+          <br>
+          <p>Open the Vagrant file</p>
+        </section>
+        
+        <section>
+          <h3>Replace with this</h3>
+          
+<pre><code>Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box     = "simple-dev-box"
+  config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
+
+  config.vm.network :forwarded_port, guest: 80, host: 9000
+
+  config.vm.network :private_network, ip: "192.168.33.10"
+
+  config.vm.provider :virtualbox do |vb|
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "512"]
+  end
+end</code></pre>
+          
+          
+          delete all the configs
+          add top ruby block
+          add config.vm.box
+          add config.vm.box_url
+        </section>
+        
+        <section>
+          vagrant up - wait for everyone to download
+        </section>
+        
+        <section>
+          10 min break
+        </section>
+        
+        <section>
+          <h3>Vagrant is up</h3>
+          
+          <br>
+          <p>Time to go exploring</p>
+        </section>  
+        
+        <section>
+          <h3>The Vagrant Box</h3>
+          
+          <br>
+          <pre><code>vagrant ssh</code></pre>
+          
+          <br>
+          <pre><code>ls -als</code></pre>
+        </section>
+        
+        <section>
+          
+          
+          modify Vagrant file to do
+          reload
+          test
+          
+          port forward
+          reload
+          test
+          
+          IP Address assignment
+          reload
+          test
+          
+          sync folders
+          reload
+          test
+        </section>
+        
+        <section>
+          setup student's choice of HTML or Javasript site
+          make sure to provide them with instructions for installation
+        </section>
+        
+        <section>
+          demo GridKick local env
+        </section>
+      
+        
+      </div> <!-- end of div class="slides" -->
+      
+      <footer>
+        <div class="copyright">
+          Intro to Servers &hearts; Girl Develop It Boulder 
+          <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/80x15.png" /></a>
+        </div>
+      </footer>
+    </div><!-- end of div class="reveal" -->
+
+
+    <script src="reveal/lib/js/head.min.js"></script>
+    <script src="reveal/js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
