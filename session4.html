@@ -17,8 +17,8 @@
     <!-- dark editor--><link rel="stylesheet" href="reveal/lib/css/light.css">
 
     <!-- If use the PDF print sheet so students can print slides-->
-    
     <link rel="stylesheet" href="reveal/css/print/pdf.css" type="text/css" media="print">
+    <link rel="stylesheet" href="styles/global.css"        type="text/css">
 
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
@@ -51,16 +51,26 @@
       
         <section>
           <h3>Session 3 Review</h3>
+          <img src="images/session-3-endgoal.png">
         </section>
         
         <section>
-          <h3>Concepts to explain</h3>
           <h3>End Goal</h3>
+          
+          <br>
+          <p>Use Vagrant to create a VM,</p>
+          <p>and setup HTML site & Nodejs site</p>
         </section>
       
         <section>
           <h3>What is Vagrant?</h3>
-          
+          <p>(visually)</p>
+          <img src="images/virtualbox-vagrant.jpg">
+        </section>
+        
+        <section>
+          <h3>What is Vagrant?</h3>
+          <p>(technically)</p>  
           <br>
           <p>Tool to create and configure,</p>
           <ul>
@@ -78,10 +88,10 @@
         </section>
         
         <section>
-          <h3>Where this is awesome</h3>
+          <h3>Where this helps</h3>
           
           <br>
-          <p>Rails' Database Driver works with</p>
+          <p>The Rails Database Driver supports</p>
           <ul>
             <li>Sqlite</li>
             <li>MySQL</li>
@@ -291,38 +301,39 @@
           <h3>Build a VM walk through</h3>  
           
           <br>
+          <p>Start by having Vagrant create a "Vagrantfile"</p>
           <pre><code>vagrant init</code></pre>
           
-          <br>
-          <p>Open the Vagrant file</p>
+          <img class="scale50" src="images/virtualbox-vagrant.jpg">
         </section>
         
         <section>
-          <h3>Replace with this</h3>
+          <h3>Simplify Vagrant file</h3>
           
-<pre><code>Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box     = "simple-dev-box"
-  config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
-
-  config.vm.network :forwarded_port, guest: 80, host: 9000
-
-  config.vm.network :private_network, ip: "192.168.33.10"
+          <br>
+          <p>Replace Vagrantfile contents and replace with</p>
+          <br>
+<pre><code class="ruby">Vagrant.configure("2") do |config|
+  config.vm.box     = "intro-to-servers"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
   config.vm.provider :virtualbox do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
     vb.customize ["modifyvm", :id, "--memory", "512"]
   end
 end</code></pre>
-          
-          
-          delete all the configs
-          add top ruby block
-          add config.vm.box
-          add config.vm.box_url
         </section>
         
         <section>
-          vagrant up - wait for everyone to download
+          <h3>Start Vagrant</h3>
+          
+          <br>
+          <p>Use the "up" command</p>
+          <pre><code>vagrant up</code></pre>
+          
+          <br>
+          <p>Again, this tells Vagrant to create the VM through</p>
+          <p>VirtualBox according to Vagrantfile configurations.</p>
         </section>
         
         <section>
@@ -340,42 +351,121 @@ end</code></pre>
           <h3>The Vagrant Box</h3>
           
           <br>
-          <pre><code>vagrant ssh</code></pre>
+          <p>How do we SSH into a VM that's on our computer?</p>
           
           <br>
-          <pre><code>ls -als</code></pre>
+          <p>Use the Vagrant provided SSH interface</p>
+          <pre><code>vagrant ssh</code></pre>
         </section>
         
         <section>
+          <h3>Explore the /vagrant folder</h3>
           
+          <br>
+          <p>Upon successfully SSH-ing into the VM</p>
           
-          modify Vagrant file to do
-          reload
-          test
+          <br>
+          <p>Where are we?</p>
+          <pre><code>pwd</code></pre>
           
-          port forward
-          reload
-          test
-          
-          IP Address assignment
-          reload
-          test
-          
-          sync folders
-          reload
-          test
+          <br>
+          <p>Vagrant automatically mirrors files in the "Vagrantfile" directory to "/vagrant"</p>
+          <pre><code>cd /vagrant
+ls -als
+0 drwxr-xr-x  1 vagrant vagrant  136 Feb 10 04:56 .
+4 drwxr-xr-x 24 root    root    4096 Feb 10 04:59 ..
+0 drwxr-xr-x  1 vagrant vagrant  102 Feb 10 04:57 .vagrant
+4 -rw-r--r--  1 vagrant vagrant  319 Feb 10 04:57 Vagrantfile</code></pre>
         </section>
         
         <section>
-          setup student's choice of HTML or Javasript site
-          make sure to provide them with instructions for installation
+          <h3>VirtualBox hardware emulation</h3>
+          <h5>Assign a static, private IP to VM</h5>
+          
+          <br>
+          <p>To do this, we add the following to the Vagrant file</p>
+          
+<pre><code>Vagrant.configure("2") do |config|
+  config.vm.box     = "intro-to-servers"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+  config.vm.provider :virtualbox do |vb|
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "512"]
+  end
+  
+  config.vm.network :private_network, ip: "192.168.50.4"
+end</code></pre>
+
+          <p>Reload vagrant</p>
+          <pre><code>vagrant reload</code></pre>
         </section>
         
         <section>
-          demo GridKick local env
+          <h3>Why would we want a static IP?</h3>
+          
+          <br>
+          <p>Helps while developing software</p>
+          
+          <br>
+          <p>Mimic multi box or server env. EG,</p>
+          <ul class="w5">
+            <li>IP-1 = database</li>
+            <li>IP-2 = backend server</li>
+            <li>IP-3 = frontend server</li>
+          </ul>
+          
+          <br>
+          <br>
+          <p>Assigning IP addresses to each Vagrant box make it</p>
+          <p>easy to configure your app's multi box needs.</p>
         </section>
-      
+          
+        <section>
+          <h3>VirtuaBox hardware emulation</h3>
+          <h5>Port forwarding</h5>
+          
+          <p>Forward HTTP Requests made to</p>
+          <p>your computer's port 9000</p>
+          <p>to VM's port 80</p>
+
+<pre><code>Vagrant.configure("2") do |config|
+  config.vm.box     = "intro-to-servers"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+  config.vm.provider :virtualbox do |vb|
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "512"]
+  end
+  
+  config.vm.network :private_network, ip: "192.168.50.4"
+  
+  config.vm.network :forwarded_port, guest: 80, host: 9000
+end</code></pre>
+
+          <p>Reload Vagrant</p>
+          <pre><code>vagrant reload</code></pre>
+        </section>
         
+        <section>
+          <h3>Why forward ports?</h3>
+          
+          <br>
+          <p>Avoids port collisions. For example, you want to</p>
+          <p>run 3 versions of MySQL simultaneously.</p>
+          
+          <img src="images/virtualbox-port-forwarding-example.jpeg">
+          
+        </section>
+        
+        <section>
+          <h3>End of VirtualBox</h3>
+          <br>
+          <br>
+          <h3>Free time to</h3>
+          <p>setup HTML or Javascript site</p>
+          <p>on Vagrant machine</p>
+        </section>
       </div> <!-- end of div class="slides" -->
       
       <footer>
