@@ -1,0 +1,40 @@
+code.html {font-size: 130%;}
+      
+.wider {
+  width: 150%;
+}
+
+.full {
+  width: 100%;
+}
+
+.w3 { width: 30%; }
+.w4 { width: 40%; }
+.w5 { width: 50%; }
+.w10 { width: 100%; }
+
+p.citation {
+  font-size: 50%;
+}
+
+.inline-code {
+  background-color: rgb(63, 63, 63); 
+  color: rgb(220, 220, 220); 
+  font-family: monospace; 
+  text-align: left; 
+  white-space: pre-wrap;
+}
+
+img.scale50 {
+  width: 50%;
+  height: 50%;
+}
+
+img.scale70 {
+  width: 70%;
+  height: 70%;
+}
+
+.redred {
+  color: red;
+}
