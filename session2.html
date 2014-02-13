@@ -213,8 +213,8 @@ value =
 key   = -s
 value = /bin/bash</code></pre>
 <br>
-<p>What's the resulting command?</p>
-<pre><code>_______    __  ______   ___   __  _______    _________</code></pre>
+<p>Resulting command</p>
+<pre><code>useradd -d /home/deploy -m -s /bin/bash deploy</code></pre>
         </section>
         
         <section>
@@ -230,7 +230,7 @@ value = /bin/bash</code></pre>
 <pre><code>(none)</code></pre>
 
 <p>Resulting Command</p>
-<pre><code>______   _______</code></pre>
+<pre><code>passwd deploy</code></pre>
 
 <br>
 <p>Enter password = "gdi" twice</p>
@@ -362,63 +362,47 @@ value = /bin/bash</code></pre>
         </section>
         
         <section>
-          <h3>Exercise 3 - Step 1</h3>
-          <h3>Add deploy to "sudo" group</h3>
+          <h3>Exercise</h3>
           
-<br>
-<p>ssh into server as "root"</p>
-<pre><code>ssh root@9.8.7.6</code></pre>
+          <br>
+          <p>First, SSH into the server as root</p>
+          <pre><code>ssh root@9.8.7.6</code></pre>
+        </section>
+        
+        <section>
+          <h3>Add deploy to "sudo" group</h3>
 
-<p>Command</p>
-<pre><code>usermod</code></pre>
+          <p>Command</p>
+          <pre><code>usermod</code></pre>
 
-<p>Arguments</p>
+          <p>Arguments</p>
 <pre><code>arguemnt 1 = sudo
 argument 2 = deploy</code></pre>
 
-<p>Options (required)</p>
+          <p>Options (required)</p>
 <pre><code>key   = -aG
 value = </code></pre>
 
-<br>
-<p>What's the resulting command?</p>
-<pre><code>______   ___   ______   _______</code></pre>
-
+          <br>
+          <p>Resulting command</p>
+          <pre><code>usermod -aG sudo deploy</code></pre>
         </section>
         
         <section>
-          <h3>Exercise 3 - Step 2</h3>
           <h3>Ensure deploy added to group</h3>
-
-<br>
-<p>SSH into server as "deploy"</p>
-<pre><code>ssh deploy@9.8.7.6</code></pre>
-
-<p>Command</p>
-<pre><code>groups</code></pre>
-
-<p>Argument (optional)</p>
-<pre><code># (blank - defaults to current user)
-
-deploy</code></pre>
-
-<br>
-<p>What's the resulting command?</p>
-<pre><code>______ 
-______   _______</code></pre>
-
-        </section>
-        
-        <section>
-          <h3>Exercise 3 - Test out sudo</h3>
           
-<br>
-<p>Use sudo with echo</p>
-<pre><code>sudo echo "I have power"</code></pre>
+          <br>
+          <p>Exit out of SSH session by typing in exit</p>
+          <pre><code>exit</code></pre>
+
+          <br>
+          <p>SSH into server as "deploy"</p>
+          <pre><code>ssh deploy@9.8.7.6</code></pre>
+ 
+          <br>
+          <p>Use sudo with echo</p>
+          <pre><code>sudo echo "I have power"</code></pre>
         </section>
-        
-        
-        
         
         <section>
           <h3>Update our Cloud picture</h3>
@@ -518,15 +502,11 @@ deploy@intro-100:~$
           
           <br>          
           <div class="fragment">
-            <p>what if there was a tool ...</p>
+            <p>google, "linux default nginx location"</p>
             <div class="fragment">
-              <p>there is a tool</p>
-              <pre><code>where</code></pre>
+              <pre><code>/etc/nginx</code></pre>
             </div>
           </div>
-          
-          <br>
-          <pre class="fragment"><code>where  # => /etc/nginx</code></pre>
         </section>
         
         <section>
@@ -636,7 +616,6 @@ Usage: nginx {start|stop|restart|reload|force-reload|status|configtest}</code></
         
         <section>
           <p>If time allows</p>
-          <h3>Exercise 5</h3>
           <h3>SSH public/private key auth</h3>
           
           <br>
