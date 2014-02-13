@@ -84,6 +84,10 @@ http://linux.about.com/od/commands/l/blcmdl1_ls.htm
 
 `npm` - node package manager, like `apt-get` but for Nodejs code
 
+<br>
+<br>
+<br>
+
 `forever` - command access to Forever Javascript Daemon process manager
   
   - `forever --help` - list forever help info
@@ -94,6 +98,9 @@ http://linux.about.com/od/commands/l/blcmdl1_ls.htm
   
   - `forever stopall` - stop all forever processes
 
+<br>
+<br>
+<br>
 
 `vagrant` - command access to the vagrant program
 
