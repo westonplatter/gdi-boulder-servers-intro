@@ -23,14 +23,6 @@
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
-    
-    <style>
-      code.html {font-size: 130%;}
-      
-      .wider {
-        width: 150%;
-      }
-    </style>
   </head>
 
   <body>
@@ -88,18 +80,20 @@
           <p>Software packages are written with specific intents, but allow you to configure them.</p>
           
           <br>
-          <p>For example:</p>
-          <ul>
-            <li>Desktop Background</li>
-            <li>Username and Password</li>
-          </ul>
+          <div class="left-align">
+            <p>For example:</p>
+            <ul>
+              <li>Desktop Background</li>
+              <li>Username and Password</li>
+            </ul>
+            
+            <br>
+            <br>
+            <p>Most unix packages have 1 or multiple config files.</p>
           
-          <br>
-          <p>Most unix packages will have 1 of many configraution files.</p>
-          
-          <b></b>
-          
-          <p>There isn't a default location for the config file - read the docs.</p>
+            <br>
+            <p>No default location for the config file - read the docs.</p>
+          </div>
         </section>
       
         <section>
@@ -243,19 +237,21 @@ default_type application/octet-stream;
         <section>
           <h3>nginx.conf</h3>
           <h5>block: http</h5>
-          <h3>Logging Settings</h3>
+          <h5>Logging Settings</h5>
+          <img src="images/nginx-config-logging.png">
         </section>
           
         <section>
           <h3>nginx.conf</h3>
           <h5>block: http</h5>
-          <h3>Gzip Settings</h3>
+          <h5>Gzip Settings</h5>
+          <img class="scale50" src="images/nginx-config-gzip.png">
         </section>
         
         <section>
           <h3>nginx.conf</h3>
           <h5>block: http</h5>
-          <h3>Virtual Host Configs</h3>
+          <h5>Virtual Host Configs</h5>
           
           <br>
           <p>Again, pulling outside files into configuration</p>
@@ -319,8 +315,9 @@ ls
           <h3>NGINX "server" blocks for Site</h3>  
           
           <br>
-          <p>Need somthing to map between NGXIN and folder</p>
+          <p>Need somthing to map between NGINGX and folder</p>
           
+          <br>
           <img src="images/nginx-server-html.png">
         </section>
         
@@ -349,10 +346,10 @@ ls
 
           <br>
 <pre><code>server {
-listen 7010;
-server_name html_site;
-root /var/www/html_site;
-index index.html index.htm;
+  listen 7010;
+  server_name html_site;
+  root /var/www/html_site;
+  index index.html index.htm;
 }</code></pre>
 
           <br>
@@ -441,16 +438,14 @@ sudo apt-get install nodejs</code></pre>
           <br>
           <p>Use git again</p>
 <pre><code>cd /var/www
-git clone git@github.com:westonplatter/gdi-boulder-servers-intro-node-uploader.git node_site
+git clone git://github.com/westonplatter/node-uploader.git
+cd node_site
 </code></pre>
 
           <br>
           <p>Install dependencies</p>
-          <pre><code>npm install</code></pre>
-          
-          <br>
-          <p>Install this too</p>
-          <pre><code>npm install -g forever</code></pre>
+          <pre><code># location = /var/www/node_site
+npm install</code></pre>
         </section>
         
         <section>
@@ -458,11 +453,12 @@ git clone git@github.com:westonplatter/gdi-boulder-servers-intro-node-uploader.g
           
           <br>
           <p>Start up the node app</p>
-          <pre><code>node server</code></pre>
+          <pre><code># location = /var/www/node_site
+node server.js</code></pre>
           
           <br>
-          <p>Go to your IP address on port 9000</p>
-          <pre><code>9.8.7.6:9000</code></pre>
+          <p>Go to your IP address on port 7020</p>
+          <pre><code>9.8.7.6:7020</code></pre>
         </section>
       
         <section>
@@ -470,7 +466,6 @@ git clone git@github.com:westonplatter/gdi-boulder-servers-intro-node-uploader.g
           
           <br>
           <p>Create a Server block with Reverse Proxy</p>
-          
           <img src="images/nginx-reverse-proxy.png">
         </section>
         
@@ -485,10 +480,36 @@ git clone git@github.com:westonplatter/gdi-boulder-servers-intro-node-uploader.g
 nano node_site</code></pre>
 
             <br>
-            <p>Restart nginx to pick up configs</p>
-            <pre><code>sudo service nginx restart</code></pre>
+            <pre><code>
+server {
+  listen 9000;
+  
+  location / {
+    proxy_pass http://127.0.0.1:7020;
+  }
+}
+</code></pre>
         </section>
         
+        
+      <section>
+        <h3></h3>  
+          <h3>Test it out</h3>
+          
+          <p>Restart nginx to pick up node_site config</p>
+          <pre><code># location = does not matter
+sudo service nginx restart</code></pre>
+          
+          <br>
+          <p>Start the node app</p>
+          <pre><code># location = /var/www/node_site
+node server.js</code></pre>
+          
+          <br>
+          <p>Open web browser and go to IP address on port 9000</p>
+          <pre><code>9.8.7.6:9000</code></pre>
+      </section>
+      
        <section>
           <h3>How do we keep the app running?</h3>
           
@@ -496,23 +517,38 @@ nano node_site</code></pre>
           <p>We need a process manager, AKA, daemon</p>
           
           <br>
-<pre><code>sudo npm install -g forever
-cd /var/www/node_site
-forever start server.js
+          <p>Forever is a Javascript "daemon" tool</p>
+<pre><code># location = does not matter
+sudo npm install -g forever
 </code></pre>
 
           <br>
-          <p>See that it's running (similar to "ps aux | grep nginx"</p>
+          <p>Use forever to start nodejs app</p>
+<pre><code>cd /var/www/node_site
+forever start server.js
+</code></pre>
+        </section>
+        
+        <section>
+          <h3>Forever Commands</h3>
+          
+          <br>
+          <p>See processes that are running</p>
+          <p>(similar to "ps aux | grep nginx"</p>
           <pre><code>forever list</code></pre>
-         </section>
+          
+          <br>
+          <p>Stop all forever processes</p>
+          <pre><code>forever stopall</code></pre>
+          
+          <br>
+          <p>List all forever commands</p>
+          <pre><code>forever --help</code></pre>
+        </section>
         
         <section>
           <h3>Session 3 End Goal</h3>
           <img src="images/session-3-endgoal.png">
-        </section>
-    
-        <section>
-          10 min break
         </section>
       </div> <!-- end of div class="slides" -->
       
